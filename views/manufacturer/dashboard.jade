@@ -1,0 +1,208 @@
+extends ../layout
+
+block content
+	nav(class='navbar navbar-default', role='navigation')
+			div(class='container-fluid')
+					div(class='navbar-header')
+						button(type='button', class='navbar-toggle', data-toggle='collapse', data-target='#account')
+							span(class='sr-only') MENU
+							span(class='icon-bar')
+							span(class='icon-bar')
+							span(class='icon-bar')
+						span(class='navbar-brand', href='#') Aircraft Upgrade
+					div(class='collapse navbar-collapse', id='account')
+						p(class='navbar-text', title='Welcome #{user.username}'): a(class='navbar-link', href='/dashboard/#{user.username}/#manufacturer-view') Welcome #{user.username}
+						p(class='navbar-text navbar-right') 
+							| Signed in as #{user.userRole.roleName} 
+							a(class='navbar-link', href='/signout') Sign Out
+	div(class='container-fluid', id='main-region')
+	div(class='loading', id='loading')
+	
+	<!-- templates -->
+	script(type='text/template', id='products-template')
+		| <h1>Products</h1>
+		| <div class='' id='products'></div>
+	script(type='text/template', id='product-template')
+		| <p><%= name %></p>
+
+	script(type='text/template', id='no-product-template')
+		| <h2>No Products available.</h2>
+
+	<!-- product manufacturer -->
+	script(type='text/template', id='product-manufacturer-view-template')
+		| <h2>Manufacturer Information <small><a href="#manufacturer-edit">Edit</a></small></h2>
+		| <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+		| <hr/>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<span><strong>Company Name:</strong></span>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= companyName %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Street Address 1:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= streetAddress1 %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Street Address 2:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= streetAddress2 %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>City:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= city %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>State:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= state %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Zip Code:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= zipCode %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Country:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= country %></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Website URL:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><a href="<%= websiteUrl %>" target="_blank"><%= websiteUrl %></a></span>
+		|	</div>
+		| </div>
+		| <div class="row">
+		| 	<div class="col-sm-3">
+		|		<label><strong>Phone No:</strong></label>
+		|	</div>
+		|	<div class="col-sm-9">
+		|		<span><%= phoneNo %></span>
+		|	</div>
+		| </div>
+		| <hr/>
+		| <div class="row">
+		|	<div class="col-sm-12">
+		|	<address>
+		|		<strong><%= companyName %></strong><br/>
+		|		<%= streetAddress1 %>, <%= city %><br/>
+		|		<%= country %>, <%= state %>, <%= zipCode %><br/>
+		|		<abbr title="Phone">P:</abbr> <%= phoneNo %><br/>
+		|		<abbr title="Website">W:</abbr> <a href="<%= websiteUrl %>"><%= websiteUrl %></a>
+		|	</address>
+		|	</div>
+		| </div>
+	script(type='text/template', id='product-manufacturer-edit-template')
+		| <form class="form-horizontal" role="form" id="form">
+		| <div class="row">
+		|	<div class="col-sm-6 col-sm-offset-2"><h2>Edit Manufacturer Information</h2></div>
+		| </div>
+		|  <div class="form-group">
+		|    <label for="companyName" class="col-sm-2 control-label">Company Name</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="companyName" id="companyName" value="<%= companyName %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="streetAddress1" class="col-sm-2 control-label">Street Address 1</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="streetAddress1" id="streetAddress1" value="<%= streetAddress1 %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="streetAddress2" class="col-sm-2 control-label">Street Address 2</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="streetAddress2" id="streetAddress2" value="<%= streetAddress2 %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="city" class="col-sm-2 control-label">City</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="city" id="city" value="<%= city %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="state" class="col-sm-2 control-label">State</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="state" id="state" value="<%= state %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="zipCode" class="col-sm-2 control-label">Zip Code/Postal Code</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="zipCode" id="zipCode" value="<%= zipCode %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="country" class="col-sm-2 control-label">Country</label>
+		|    <div class="col-sm-6">
+		|      <input type="text" class="form-control" name="country" id="country" value="<%= country %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="websiteUrl" class="col-sm-2 control-label">Website URL</label>
+		|    <div class="col-sm-6">
+		|      <input type="url" class="form-control" name="websiteUrl" id="websiteUrl" value="<%= websiteUrl %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <label for="phoneNo" class="col-sm-2 control-label">Phone No.</label>
+		|    <div class="col-sm-6">
+		|      <input type="tel" class="form-control" name="phoneNo" id="phoneNo" value="<%= phoneNo %>">
+		|    </div>
+		|  </div>
+		|  <div class="form-group">
+		|    <div class="col-sm-offset-2 col-sm-6">
+		|      <button type="submit" class="btn btn-default" id="save">Save Information</button>
+		|    </div>
+		|  </div>
+		|</form>
+
+block scripts
+	script(src='/js/manufacturer/app.js')
+	script(src='/js/manufacturer/router.js')
+	<!-- model -->
+	script(src='/js/model/productManufacturer.js')
+	script(src='/js/model/productCategory.js')
+	script(src='/js/model/product.js')
+	<!-- layout -->
+	script(src='/js/view/layout/manufacturer/app.js')
+	<!-- view -->
+	script(src='/js/view/loadingView.js')
+	script(src='/js/view/layout/manufacturer/menu.js')
+	script(src='/js/view/productManufacturer.js')
+	script(src='/js/view/productCategory.js')
+	script(src='/js/view/product.js')
+	<!-- controller -->
+	script(src='/js/controller/manufacturer/app.js')
+	script(src='/js/controller/manufacturer/productManufacturer.js')
+	script(src='/js/controller/manufacturer/productCategory.js')
+	script(src='/js/controller/manufacturer/product.js')
+
+	<!-- main executable -->
+	script(src='/js/manufacturer/mainExe.js')

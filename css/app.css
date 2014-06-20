@@ -1,0 +1,36 @@
+#login-container {
+	text-align: left;
+	color: #333;
+}
+
+div.alert.alert-danger {
+	
+}
+a.terms, a.terms:focus, a.terms:hover {
+	color: #428BCA;
+}
+
+.help-block {
+	font-size: 7.5pt;
+}
+/* footer */
+footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+}
+
+#dashboard .help-block {
+	font-size: 10.5pt
+}
+
+/*
+#loading{
+	position:fixed;
+	z-index:999;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	background:rgba(0,0,0,0.3);
+} */

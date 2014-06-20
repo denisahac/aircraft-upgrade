@@ -1,0 +1,97 @@
+doctype html
+html(lang='en')
+	head
+		title= title
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width', initial-scale='1')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		
+		<!-- libs styles -->
+		link(rel='stylesheet', href='/css/vendor/development/bootstrap.css')
+
+		<!-- custom styles -->
+		link(rel='stylesheet', href='/css/cover.css')
+		link(rel='stylesheet', href='/css/app.css')
+		link(rel='stylesheet', href='/css/parsley.css')
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- [if lt IE 9]>
+		script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+		script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+		<!--[endif]-->
+	body
+		div(class='site-wrapper')
+			div(class='site-wrapper-inner')
+				div(class='cover-container')
+					div(class='masthead clearfix')
+						div(class='inner')
+							h3(class='masthead-brand') Aircraft Upgrade
+							ul(class='nav masthead-nav')
+								li: a(href='/', title='Welcome to Aircraft Upgrade') Home
+								li: a(href='/about', title='About Us') About
+								li: a(href='/contact', title='Contact Us') Contact
+								li: a(href='/signin', title='Sign In') Signin
+								li.active: a(href='/signup', title='Sign Up') Signup
+
+					div(class='inner cover')
+						div(class='row')
+							div(class='col-lg-12 well', id='login-container')
+								legend Please Sign Up
+								if hasError
+									div(class='alert alert-danger alert-dismissable')
+										button(type='button', class='close', data-dismiss='alert', aria-hidden='true') &times;
+										h4 Oh snap! 
+										each error in errors
+											p=error
+								form(method='post', action='/signup', role='form', id='signUpForm', novalidate)
+									
+									h4 Please select what user type are you
+									div(class='radio')
+										label(class='control-label')
+											input(type='radio', id='user_type', name='user_type', checked='true', value='1')
+											| Owner/Pilot
+									div(class='radio')
+										label(class='control-label')
+											input(type='radio', id='user_type', name='user_type', value='2')
+											| Product Manufacturer
+									div(class='form-group')
+										label(for='email', class='control-label') Email
+										input(type='text', class='form-control', id='email', name='email', placeholder='Email', value='#{email ? email: ""}',
+											data-parsley-required='true', data-parsley-required-message='Email is required', data-parsley-type='email',
+											data-parsley-type-message='This is should be a valid email(e.g. john@doe.com')
+									div(class='form-group')
+										label(for='password', class='control-label') Password
+										input(type='password', class='form-control', id='password', name='password', placeholder='Password',
+											data-parsley-required='true', data-parsley-required-message='Password is required',
+											data-parsley-minlength='6', data-parsley-minlength-message='Password should be at least 6 characters long')
+									div(class='form-group')
+										label(for='c_password', class='control-label') Confirm Password
+										input(type='password', class='form-control', id='c_password', name='c_password', placeholder='Confirm Password',
+											data-parsley-required='true', data-parsley-required-message='Password doesn\'t macth',
+											data-parsley-equalto='#password', data-parsley-equalto-message='Password doesn\'t match')
+									div(class='form-group')
+										label(for='terms', class='control-label')
+											input(type='checkbox', id='terms', name='terms',
+												data-parsley-required='true', data-parsley-required-message='You must agree to our terms and condition upon signing up')
+											| I agree with the
+											a(href='#', class='terms') Terms and Condition
+									button(type='submit', class='btn btn-info', id='signUpButton') Sign In
+
+					div(class='mastfoot')
+						div(class='inner')
+							p
+								| &copy; 2014 
+								a(href='/', title='Welcome to Aircraft Upgrade') Aircraft Upgrade
+								|, by 
+								a(href='https://facebook.com/den.isahac') den.isahac
+
+		<!-- libs scripts -->
+		script(src='/js/vendor/development/jquery.js')
+		script(src='/js/vendor/development/bootstrap.js')
+		script(src='/js/vendor/development/parsley.js')
+
+
+		<!-- custom scripts -->
+		script(src='/js/signup.js')
+
