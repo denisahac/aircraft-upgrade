@@ -43,7 +43,7 @@ passport.deserializeUser(function(username, done) {
 
 });
 // set variables
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('view options', { pretty: true, layout: false });
@@ -144,6 +144,6 @@ app.use(route.notFound404);
 var server = app.listen(app.get('port'), function(err) {
 	if(err) throw err;
 
-	var message = 'Server is running @ http://localhost:' + server.address().port;
+	var message = 'Server is running @ port ' + server.address().port;
 	console.log(message);
 });
